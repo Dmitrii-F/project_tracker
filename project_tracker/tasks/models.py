@@ -38,6 +38,9 @@ class Task(models.Model):
         default='New',
     )
 
+    def __str__(self):
+        return self.name
+
 class BugReport(models.Model):
     STATUS_CHOICES = [
         ('New', 'Новая'),
@@ -76,6 +79,9 @@ class BugReport(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
+
 class FeatureRequest(models.Model):
     STATUS_CHOICES = [
         ('New', 'Рассмотрение'),
@@ -113,3 +119,6 @@ class FeatureRequest(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
