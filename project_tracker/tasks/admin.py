@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Project, Task
 from quality_control.admin import BugReportInline, FeatureRequestInline
 
-# Inline класс для модели Task
+# Бауманская почта; 12345
 class TaskInline(admin.TabularInline):
     model = Task
     extra = 0
