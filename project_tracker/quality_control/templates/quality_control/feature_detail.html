@@ -1,10 +1,10 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-    <h1>{{feature.title}}</h1>
-    <h3>{{feature.description}}</h3>
-    <p>{{feature.project}}/ {{feature.task}}/</p>
-    <p> {{feature.status}} ... priority: {{feature.priority}} </p>
-    <p> {{feature.created_at}} ... {{feature.updated_at}}</p>
+    <h1>{{featurerequest.title}}</h1>
+    <h3>{{featurerequest.description}}</h3>
+    <p>{{featurerequest.project}}/ {{featurerequest.task}}/</p>
+    <p> {{featurerequest.status}} ... priority: {{featurerequest.priority}} </p>
+    <p> {{featurerequest.created_at}} ... {{featurerequest.updated_at}}</p>
 
 {% endblock %}
