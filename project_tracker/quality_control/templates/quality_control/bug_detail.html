@@ -3,8 +3,14 @@
 {% block content %}
     <h1>{{bug.title}}</h1>
     <h3>{{bug.description}}</h3>
+
+    <!-- Ссылка для изменения бага -->
+    <p><a href="{% url 'quality_control:update_bug' bugreport.id %}">Изменить </a>...
+    <!-- Ссылка для удаления бага -->
+    <a href="{% url 'quality_control:delete_bug' bugreport.id %}">Удалить </a></p>
+
     <p>{{bug.project}}/ {{bug.task}}/</p>
-    <p> {{bug.status}} ... priority: {{bug.priority}} </p>
+    <p> {{bug.get_status_display}} ... priority: {{bug.priority}} </p>
     <p> {{bug.created_at}} ... {{bug.updated_at}}</p>
 
 {% endblock %}
