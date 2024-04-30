@@ -3,8 +3,14 @@
 {% block content %}
     <h1>{{featurerequest.title}}</h1>
     <h3>{{featurerequest.description}}</h3>
+
+    <!-- Ссылка для изменения фичи -->
+    <p><a href="{% url 'quality_control:update_feature' featurerequest.id %}">Изменить </a>...
+    <!-- Ссылка для удаления фичи -->
+    <a href="{% url 'quality_control:delete_feature' featurerequest.id %}">Удалить </a></p>
+
     <p>{{featurerequest.project}}/ {{featurerequest.task}}/</p>
-    <p> {{featurerequest.status}} ... priority: {{featurerequest.priority}} </p>
+    <p> {{featurerequest.get_status_display}} ... priority: {{featurerequest.priority}} </p>
     <p> {{featurerequest.created_at}} ... {{featurerequest.updated_at}}</p>
 
 {% endblock %}

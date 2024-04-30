@@ -2,36 +2,12 @@
 from .models import Project, Task
 
 from django.views import View
-from django.views.generic import ListView
-from django.views.generic import DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import ProjectForm, TaskForm
 
-
-
-def create_project(request):
-    if request.method == 'POST':
-        form = ProjectForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('tasks:projects_list')
-    else:
-        form = ProjectForm()
-    return render(request, 'tasks/project_create.html', {'form': form})
-
-def add_task_to_project(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
-    if request.method == 'POST':
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            task = form.save(commit=False)
-            task.project = project
-            task.save()
-            return redirect('tasks:project_detail', project_id=project.id)
-    else:
-        form = TaskForm()
-    return render(request, 'tasks/add_task.html', {'form': form, 'project': project})
+from django.urls import reverse, reverse_lazy
 
 
 
@@ -52,3 +28,53 @@ class TaskDetailView(DetailView):
     model = Task
     pk_url_kwarg = 'task_id'
     template_name = 'tasks/task_detail.html'
+
+
+
+class ProjectCreateView(CreateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'tasks/project_create.html'
+    success_url = reverse_lazy('tasks:projects_list')
+
+class TaskCreateView(CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'tasks/add_task.html'
+
+    def form_valid(self, form):
+        form.instance.project = get_object_or_404(Project, pk=self.kwargs['project_id'])
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('tasks:project_detail', kwargs={'project_id': self.kwargs['project_id']})
+
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'tasks/project_update.html'
+    pk_url_kwarg = 'project_id'
+    success_url = reverse_lazy('tasks:projects_list')
+
+class TaskUpdateView(UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'tasks/task_update.html'
+    pk_url_kwarg = 'task_id'
+
+    def get_success_url(self):
+        return reverse_lazy('tasks:task_detail', kwargs={'project_id': self.object.project.id, 'task_id': self.object.id})
+
+
+class ProjectDeleteView(DeleteView):
+    model = Project
+    pk_url_kwarg = 'project_id'
+    success_url = reverse_lazy('tasks:projects_list')
+    template_name = 'tasks/project_confirm_delete.html'
+
+class TaskDeleteView(DeleteView):
+    model = Task
+    pk_url_kwarg = 'task_id'
+
+    def get_success_url(self):
+        return reverse_lazy('tasks:project_detail', kwargs={'project_id': self.object.project.id})
