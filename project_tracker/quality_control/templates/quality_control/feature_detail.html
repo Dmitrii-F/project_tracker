@@ -5,9 +5,9 @@
     <h3>{{feature.description}}</h3>
 
     <!-- Ссылка для изменения фичи -->
-    <p><a href="{% url 'quality_control:update_feature' featurerequest.id %}">Изменить </a>...
+    <p><a href="{% url 'quality_control:update_feature' feature.id %}">Изменить </a>...
     <!-- Ссылка для удаления фичи -->
-    <a href="{% url 'quality_control:delete_feature' featurerequest.id %}">Удалить </a></p>
+    <a href="{% url 'quality_control:delete_feature' feature.id %}">Удалить </a></p>
 
     <p>{{feature.project}}/ {{feature.task}}/</p>
     <p> {{feature.get_status_display}} ... priority: {{feature.priority}} </p>

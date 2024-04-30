@@ -5,9 +5,9 @@
     <h3>{{bug.description}}</h3>
 
     <!-- Ссылка для изменения бага -->
-    <p><a href="{% url 'quality_control:update_bug' bugreport.id %}">Изменить </a>...
+    <p><a href="{% url 'quality_control:update_bug' bug.id %}">Изменить </a>...
     <!-- Ссылка для удаления бага -->
-    <a href="{% url 'quality_control:delete_bug' bugreport.id %}">Удалить </a></p>
+    <a href="{% url 'quality_control:delete_bug' bug.id %}">Удалить </a></p>
 
     <p>{{bug.project}}/ {{bug.task}}/</p>
     <p> {{bug.get_status_display}} ... priority: {{bug.priority}} </p>
